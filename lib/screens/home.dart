@@ -1,4 +1,5 @@
 import 'package:bloc_connectivity_app/blocs/bloc/internet_bloc.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +8,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InternetBloc internetBloc = BlocProvider.of<InternetBloc>(context);
+    print(internetBloc.state); // Print the initial state
+
+    Future.delayed(Duration.zero, () async {
+      final result = await Connectivity().checkConnectivity();
+      print('Connectivity check result: $result');
+    });
+
     return Scaffold(
       body: BlocConsumer<InternetBloc, InternetState>(
         listener: ((context, state) {
@@ -22,6 +31,8 @@ class HomeScreen extends StatelessWidget {
           }
         }),
         builder: (context, state) {
+          print('Received state: $state'); // This will print the current state
+
           if (state is InternetGainedState) {
             return Container(
               color: Colors.greenAccent,

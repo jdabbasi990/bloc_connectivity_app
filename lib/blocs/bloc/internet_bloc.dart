@@ -22,7 +22,6 @@ class InternetBloc extends Bloc<InternetEvent, InternetState> {
       if (result == ConnectivityResult.mobile ||
           result == ConnectivityResult.wifi) {
         print('Success Event triggered');
-
         add(InternetGainedEvent());
       } else {
         print('Failed Event triggered');
